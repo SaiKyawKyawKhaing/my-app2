@@ -6,11 +6,12 @@ export default function Home() {
   const [data, setData] = useState([]);
 
   useEffect(() => {
-      fetch("/data.json")
-          .then((response) => response.json())
-          .then((result) => setData(result));
-          console.log("DDDD",data)
-  }, []); // Runs only once on mount
+    const basePath = process.env.NEXT_PUBLIC_BASE_PATH || ""; // Needed for GitHub Pages
+    fetch(`${basePath}/data.json`) // Use the correct path
+      .then((response) => response.json())
+      .then((result) => setData(result))
+      .catch(console.error);
+  }, []);
   return (
     <div>
       <h1>Users</h1>
